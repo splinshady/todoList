@@ -1,0 +1,16 @@
+.todo_List {
+    display: flex;
+    flex-direction: column;
+}
+
+.task_list {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    padding: 0;
+}
+
+.task_item {
+    display: flex;
+    justify-content: space-between;
+}

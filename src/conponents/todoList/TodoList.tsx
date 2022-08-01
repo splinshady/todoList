@@ -1,8 +1,10 @@
-import React from 'react';
+import React, {ChangeEvent, useState, KeyboardEvent} from 'react';
 import {TaskFilterType} from "../../App";
+import Button from "../button/Button";
+import style from "./TodoList.module.css";
 
 export type TaskType = {
-    id: number,
+    id: string,
     title: string,
     isDone: boolean,
 }
@@ -10,33 +12,50 @@ export type TaskType = {
 type TodoListPropsType = {
     title: string,
     tasks: Array<TaskType>,
-    removeTask: (taskID: number) => void,
+    removeTask: (taskID: string) => void,
     changeFilter: (filter: TaskFilterType) => void,
+    addTask: (inputValue: string) => void
 }
 
-const TodoList = (props: TodoListPropsType) => {
+const TodoList: React.FC<TodoListPropsType> = (props) => {
+    const [inputValue, setInputValue] = useState<string>('')
+
+    const inputChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+        setInputValue(event.currentTarget.value);
+    }
+    const pressEnterHandler = (event: KeyboardEvent<HTMLInputElement>) => {
+        event.key === 'Enter' && addTask()
+    }
+    const addTask = () => {
+        props.addTask(inputValue)
+        setInputValue('')
+    }
+    const setFilerCreator = (filter: TaskFilterType) => {
+        return () => props.changeFilter(filter)
+    }
+
     return (
-        <div>
+        <div className={style.todo_List}>
             <h3>{props.title}</h3>
             <div>
-                <input/>
-                <button>+</button>
+                <input type={"text"} onKeyDown={pressEnterHandler} onChange={inputChangeHandler} value={inputValue}/>
+                <Button callback={addTask} title={'add'}/>
             </div>
-            <ul>
+            <ul className={style.task_list}>
                 {props.tasks.map((item) => {
                     return (
-                        <li key={item.id}>
+                        <li key={item.id} className={style.task_item}>
                             <input type="checkbox" checked={item.isDone}/>
                             <span>{item.title}</span>
-                            <button onClick={()=>{props.removeTask(item.id)}}>delete</button>
+                            <Button callback={()=>{props.removeTask(item.id)}} title={'delete'}/>
                         </li>
                     )
                 })}
             </ul>
             <div>
-                <button onClick={() => props.changeFilter('all')}>All</button>
-                <button onClick={() => props.changeFilter('active')}>Active</button>
-                <button onClick={() => props.changeFilter('completed')}>Completed</button>
+                <Button callback={setFilerCreator('all')} title={'All'}/>
+                <Button callback={setFilerCreator('active')} title={'Active'}/>
+                <Button callback={setFilerCreator('completed')} title={'Completed'}/>
             </div>
         </div>
     );
