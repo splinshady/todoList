@@ -16,6 +16,7 @@ type TodoListPropsType = {
     changeFilter: (filter: TaskFilterType) => void,
     addTask: (inputValue: string) => void,
     changeTaskStatus: (taskID: string, isDone: boolean) => void
+    filter: TaskFilterType
 }
 
 const TodoList: React.FC<TodoListPropsType> = (props) => {
@@ -49,15 +50,24 @@ const TodoList: React.FC<TodoListPropsType> = (props) => {
             props.removeTask(id)
         }, 500)
     }
+    const inputStyle = `${style.input_style} ${inputError ? style.input_error : ''}`
 
     return (
         <div className={style.todo_List}>
             <h3>{props.title}</h3>
-            <div>
-                {inputError && <span>error</span>}
-                <input type={"text"} onKeyDown={pressEnterHandler} onChange={inputChangeHandler} value={inputValue}/>
+
+            <div className={style.input_container}>
+                {inputError && <span className={style.input_message_error}>incorrect task name</span>}
+                <input
+                    className={inputStyle}
+                    type={"text"}
+                    onKeyDown={pressEnterHandler}
+                    onChange={inputChangeHandler}
+                    value={inputValue}
+                />
                 <Button callback={addTask} title={'add'}/>
             </div>
+
             <ul className={style.task_list}>
                 {props.tasks.map((item) => {
                     return (
@@ -66,17 +76,32 @@ const TodoList: React.FC<TodoListPropsType> = (props) => {
                                    checked={item.isDone}
                                    onChange={event => props.changeTaskStatus(item.id, event.currentTarget.checked)}/>
                             <span className={item.isDone ? style.task_item_checked : ''}>{item.title}</span>
-                            <Button callback={() => {
-                                removeTask(item.id)
-                            }} title={'delete'}/>
+                            <Button
+                                callback={() => {
+                                    removeTask(item.id)
+                                }} title={'delete'}/>
                         </li>
                     )
                 })}
             </ul>
-            <div>
-                <Button callback={setFilerCreator('all')} title={'All'}/>
-                <Button callback={setFilerCreator('active')} title={'Active'}/>
-                <Button callback={setFilerCreator('completed')} title={'Completed'}/>
+            <div className={style.filter_container}>
+                <Button
+                    callback={setFilerCreator('all')}
+                    title={'All'}
+                    active={props.filter === 'all'}
+                />
+
+                <Button
+                    callback={setFilerCreator('active')}
+                    title={'Active'}
+                    active={props.filter === 'active'}
+                />
+                <Button
+                    callback={setFilerCreator('completed')}
+                    title={'Completed'}
+                    active={props.filter === 'completed'}
+                />
+
             </div>
         </div>
     );

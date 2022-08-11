@@ -4,11 +4,12 @@ import style from "./Button.module.css";
 type ButtonPropsType = {
     callback: (event:any) => void,
     title: string,
+    active?: boolean,
 }
 
-const Button: React.FC<ButtonPropsType> = ({callback, title}) => {
+const Button: React.FC<ButtonPropsType> = ({callback, title, active}) => {
     return (
-        <button className={style.button} onClick={callback}>{title}</button>
+        <button className={`${active ? style.button_active : ''} ${style.button}`} onClick={callback}>{title}</button>
     );
 };
 
