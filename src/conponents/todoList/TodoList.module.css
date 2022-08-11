@@ -10,7 +10,16 @@
     padding: 0;
 }
 
+.scale {
+    transform: scale(0);
+}
+
 .task_item {
     display: flex;
     justify-content: space-between;
+}
+
+.task_item_checked {
+    text-decoration: line-through;
+    color: hotpink;
 }

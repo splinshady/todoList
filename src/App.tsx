@@ -5,7 +5,6 @@ import {v1} from "uuid";
 
 export type TaskFilterType = 'all' | 'active' | 'completed';
 
-
 function App() {
     const [tasks, setTasks] = useState<Array<TaskType>>([
         {id: v1(), title: 'html', isDone: true},
@@ -22,9 +21,13 @@ function App() {
         setTasks(tasks.filter(item => item.id !== taskID))
     }
     const addTask = (inputValue: string) => {
-        if (inputValue.length > 0) {
+        let inputValueWithoutSpase = inputValue.trim()
+        if (inputValueWithoutSpase.length > 0) {
             setTasks([{id: v1(), title: inputValue, isDone: false}, ...tasks])
         }
+    }
+    const changeTaskStatus = (taskID: string, isDone: boolean) => {
+        setTasks(tasks.map(task => task.id === taskID ? {...task, isDone: isDone} : task))
     }
 
     let currentTasks;
@@ -49,6 +52,7 @@ function App() {
                       removeTask={removeTask}
                       changeFilter={changeFilter}
                       addTask={addTask}
+                      changeTaskStatus={changeTaskStatus}
             />
         </div>
     );

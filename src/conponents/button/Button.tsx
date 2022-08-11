@@ -2,7 +2,7 @@ import React from 'react';
 import style from "./Button.module.css";
 
 type ButtonPropsType = {
-    callback: () => void,
+    callback: (event:any) => void,
     title: string,
 }
 
