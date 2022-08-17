@@ -18,6 +18,7 @@ type TodoListPropsType = {
     changeTaskStatus: (taskID: string, isDone: boolean, todoListID: string) => void
     filter: TaskFilterType,
     todoListID: string,
+    removeTodoList: (todoListID: string) => void
 }
 
 const TodoList: React.FC<TodoListPropsType> = (props) => {
@@ -57,6 +58,7 @@ const TodoList: React.FC<TodoListPropsType> = (props) => {
     return (
         <div className={style.todo_List}>
             <h3>{props.title}</h3>
+            <Button callback={() => props.removeTodoList(props.todoListID)} title={'x'}/>
 
             <div className={style.input_container}>
                 {inputError && <span className={style.input_message_error}>incorrect task name</span>}
