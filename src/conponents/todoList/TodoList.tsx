@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useState, KeyboardEvent, createRef} from 'react';
+import React, {ChangeEvent, useState, KeyboardEvent} from 'react';
 import {TaskFilterType} from "../../App";
 import Button from "../button/Button";
 import style from "./TodoList.module.css";
@@ -12,11 +12,12 @@ export type TaskType = {
 type TodoListPropsType = {
     title: string,
     tasks: Array<TaskType>,
-    removeTask: (taskID: string) => void,
-    changeFilter: (filter: TaskFilterType) => void,
-    addTask: (inputValue: string) => void,
-    changeTaskStatus: (taskID: string, isDone: boolean) => void
-    filter: TaskFilterType
+    removeTask: (taskID: string, todoListID: string) => void,
+    changeFilter: (filter: TaskFilterType, todoListID: string) => void,
+    addTask: (inputValue: string, todoListID: string) => void,
+    changeTaskStatus: (taskID: string, isDone: boolean, todoListID: string) => void
+    filter: TaskFilterType,
+    todoListID: string,
 }
 
 const TodoList: React.FC<TodoListPropsType> = (props) => {
@@ -36,20 +37,21 @@ const TodoList: React.FC<TodoListPropsType> = (props) => {
     }
     const addTask = () => {
         if (inputValue.trim()) {
-            props.addTask(inputValue)
+            props.addTask(inputValue, props.todoListID)
             setInputValue('')
         } else {
             setInputError(true)
         }
     }
-    const setFilerCreator = (filter: TaskFilterType) => {
-        return () => props.changeFilter(filter)
+    const setFilerCreator = (filter: TaskFilterType, todoListID: string) => {
+        return () => props.changeFilter(filter, todoListID)
     }
     const removeTask = (id: string) => {
         setTimeout(() => {
-            props.removeTask(id)
+            props.removeTask(id, props.todoListID)
         }, 500)
     }
+
     const inputStyle = `${style.input_style} ${inputError ? style.input_error : ''}`
 
     return (
@@ -74,7 +76,7 @@ const TodoList: React.FC<TodoListPropsType> = (props) => {
                         <li key={item.id} className={style.task_item}>
                             <input type="checkbox"
                                    checked={item.isDone}
-                                   onChange={event => props.changeTaskStatus(item.id, event.currentTarget.checked)}/>
+                                   onChange={event => props.changeTaskStatus(item.id, event.currentTarget.checked, props.todoListID)}/>
                             <span className={item.isDone ? style.task_item_checked : ''}>{item.title}</span>
                             <Button
                                 callback={() => {
@@ -86,18 +88,18 @@ const TodoList: React.FC<TodoListPropsType> = (props) => {
             </ul>
             <div className={style.filter_container}>
                 <Button
-                    callback={setFilerCreator('all')}
+                    callback={setFilerCreator('all', props.todoListID)}
                     title={'All'}
                     active={props.filter === 'all'}
                 />
 
                 <Button
-                    callback={setFilerCreator('active')}
+                    callback={setFilerCreator('active', props.todoListID)}
                     title={'Active'}
                     active={props.filter === 'active'}
                 />
                 <Button
-                    callback={setFilerCreator('completed')}
+                    callback={setFilerCreator('completed', props.todoListID)}
                     title={'Completed'}
                     active={props.filter === 'completed'}
                 />
