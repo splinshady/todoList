@@ -3,6 +3,7 @@ import {TaskFilterType} from "../../App";
 import Button from "../common/Button";
 import style from "./TodoList.module.css";
 import AddItemForm from "../common/AddItemForm";
+import {MutableTask} from "./СhangeableTask";
 
 export type TaskType = {
     id: string,
@@ -19,10 +20,15 @@ type TodoListPropsType = {
     changeTaskStatus: (taskID: string, isDone: boolean, todoListID: string) => void
     filter: TaskFilterType,
     todoListID: string,
-    removeTodoList: (todoListID: string) => void
+    removeTodoList: (todoListID: string) => void,
+    changeTaskTitle: (taskID: string, todoListID: string, newTitle: string) => void
 }
 
 const TodoList: React.FC<TodoListPropsType> = (props) => {
+
+    const changeTaskTitle = (taskID: string, newTitle: string) => {
+        props.changeTaskTitle(taskID, props.todoListID, newTitle)
+    }
 
     const addTask = (title: string) => {
         props.addTask(title, props.todoListID)
@@ -50,7 +56,7 @@ const TodoList: React.FC<TodoListPropsType> = (props) => {
                             <input type="checkbox"
                                    checked={item.isDone}
                                    onChange={event => props.changeTaskStatus(item.id, event.currentTarget.checked, props.todoListID)}/>
-                            <span className={item.isDone ? style.task_item_checked : ''}>{item.title}</span>
+                            <MutableTask taskID={item.id} changeTaskTitle={changeTaskTitle} isDone={item.isDone} title={item.title}/>
                             <Button
                                 callback={() => {
                                     removeTask(item.id)
