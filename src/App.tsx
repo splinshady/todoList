@@ -72,6 +72,14 @@ function App() {
         }
     }
 
+    const changeListTitle = (todoListID: string, newTitle: string) => {
+        let list = todoLists.find(item => item.id === todoListID)
+        if (list) {
+            list.title = newTitle
+            setTodoLists([...todoLists])
+        }
+    }
+
     let [todoLists, setTodoLists] = useState<Array<TodoListsType>>([
         {id: todoListID1, title: 'tasks react', filter: 'active'},
         {id: todoListID2, title: 'what to by', filter: 'completed'},
@@ -118,6 +126,7 @@ function App() {
                         changeTaskStatus={changeTaskStatus}
                         changeTaskTitle={changeTaskTitle}
                         filter={todoList.filter}
+                        changeListTitle={changeListTitle}
                     />
                 })
             }

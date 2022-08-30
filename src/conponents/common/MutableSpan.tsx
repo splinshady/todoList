@@ -1,18 +1,13 @@
 import React, {ChangeEvent, useState} from 'react';
-import style from "./TodoList.module.css";
 
-type MutableTaskPropsType = {
+type MutableSpanPropsType = {
     title: string,
-    isDone: boolean,
-    changeTaskTitle: (taskID: string, newTitle: string) => void,
-    taskID: string,
+    changeTitle: (newTitle: string) => void,
 }
 
-export const MutableTask: React.FC<MutableTaskPropsType> = (props) => {
+export const MutableSpan: React.FC<MutableSpanPropsType> = (props) => {
     const [editMode, setEditMode] = useState(false)
     const [title, setTitle] = useState('')
-
-    let spanClass = props.isDone ? style.task_item_checked : ''
 
     const activateEditMode = () => {
         setTitle(props.title)
@@ -21,7 +16,7 @@ export const MutableTask: React.FC<MutableTaskPropsType> = (props) => {
 
     const deactivateEditMode = () => {
         setEditMode(false)
-        props.changeTaskTitle(props.taskID, title)
+        props.changeTitle(title)
     }
 
     const onChangeTitleHandler = (event: ChangeEvent<HTMLInputElement>) => {
@@ -30,6 +25,6 @@ export const MutableTask: React.FC<MutableTaskPropsType> = (props) => {
 
     return (editMode
             ? <input type="text" value={title} onChange={onChangeTitleHandler} onBlur={deactivateEditMode} autoFocus/>
-            : <span className={spanClass} onDoubleClick={activateEditMode}>{props.title}</span>
+            : <span onDoubleClick={activateEditMode}>{props.title}</span>
     );
 };

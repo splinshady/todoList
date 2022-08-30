@@ -3,7 +3,7 @@ import {TaskFilterType} from "../../App";
 import Button from "../common/Button";
 import style from "./TodoList.module.css";
 import AddItemForm from "../common/AddItemForm";
-import {MutableTask} from "./СhangeableTask";
+import {MutableSpan} from "../common/MutableSpan";
 
 export type TaskType = {
     id: string,
@@ -22,13 +22,10 @@ type TodoListPropsType = {
     todoListID: string,
     removeTodoList: (todoListID: string) => void,
     changeTaskTitle: (taskID: string, todoListID: string, newTitle: string) => void
+    changeListTitle: (todoListID: string, newTitle: string) => void
 }
 
 const TodoList: React.FC<TodoListPropsType> = (props) => {
-
-    const changeTaskTitle = (taskID: string, newTitle: string) => {
-        props.changeTaskTitle(taskID, props.todoListID, newTitle)
-    }
 
     const addTask = (title: string) => {
         props.addTask(title, props.todoListID)
@@ -42,21 +39,32 @@ const TodoList: React.FC<TodoListPropsType> = (props) => {
         }, 500)
     }
 
+    const changeListTitle = (newTitle: string) => {
+        props.changeListTitle(props.todoListID, newTitle)
+    }
+
     return (
         <div className={style.todo_List}>
-            <h3>{props.title}</h3>
+            <h3>
+                <MutableSpan changeTitle={changeListTitle} title={props.title}/>
+            </h3>
             <Button callback={() => props.removeTodoList(props.todoListID)} title={'x'}/>
 
             <AddItemForm addItem={addTask} />
 
             <ul className={style.task_list}>
                 {props.tasks.map((item) => {
+
+                    const changeTaskTitle = (newTitle: string) => {
+                        props.changeTaskTitle(item.id, props.todoListID, newTitle)
+                    }
+
                     return (
-                        <li key={item.id} className={style.task_item}>
+                        <li key={item.id} className={item.isDone ? `${style.task_item_checked} ${style.task_item}` : style.task_item}>
                             <input type="checkbox"
                                    checked={item.isDone}
                                    onChange={event => props.changeTaskStatus(item.id, event.currentTarget.checked, props.todoListID)}/>
-                            <MutableTask taskID={item.id} changeTaskTitle={changeTaskTitle} isDone={item.isDone} title={item.title}/>
+                            <MutableSpan changeTitle={changeTaskTitle} title={item.title}/>
                             <Button
                                 callback={() => {
                                     removeTask(item.id)
