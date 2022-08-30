@@ -1,0 +1,34 @@
+.input_container {
+    display: flex;
+    align-items: center;
+    position: relative;
+    gap: 20px;
+    height: fit-content;
+    min-width: 200px;
+}
+
+.input_style {
+    width: 100%;
+    height: 100%;
+    outline: none;
+    box-sizing: border-box;
+    border: 1px solid black;
+    border-radius: 3px;
+}
+
+.input_message_error {
+    position: absolute;
+    left: 10px;
+    top: -7px;
+    color: red;
+    font-size: 0.7em;
+    background: linear-gradient(to bottom, #eff7ff, #fff);
+    border-left: 1px solid red;
+    border-right: 1px solid red;
+    border-radius: 2px;
+    padding: 0 5px;
+}
+
+.input_error {
+    border: 1px solid red;
+}

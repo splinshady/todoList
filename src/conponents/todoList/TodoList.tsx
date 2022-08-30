@@ -1,7 +1,8 @@
-import React, {ChangeEvent, useState, KeyboardEvent} from 'react';
+import React from 'react';
 import {TaskFilterType} from "../../App";
-import Button from "../button/Button";
+import Button from "../common/Button";
 import style from "./TodoList.module.css";
+import AddItemForm from "../common/AddItemForm";
 
 export type TaskType = {
     id: string,
@@ -22,27 +23,9 @@ type TodoListPropsType = {
 }
 
 const TodoList: React.FC<TodoListPropsType> = (props) => {
-    const [inputValue, setInputValue] = useState<string>('')
-    const [inputError, setInputError] = useState<boolean>(false)
 
-    const inputChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
-        if (event.currentTarget.value === ' ') {
-            setInputError(true)
-        } else {
-            setInputError(false)
-            setInputValue(event.currentTarget.value)
-        }
-    }
-    const pressEnterHandler = (event: KeyboardEvent<HTMLInputElement>) => {
-        event.key === 'Enter' && addTask()
-    }
-    const addTask = () => {
-        if (inputValue.trim()) {
-            props.addTask(inputValue, props.todoListID)
-            setInputValue('')
-        } else {
-            setInputError(true)
-        }
+    const addTask = (title: string) => {
+        props.addTask(title, props.todoListID)
     }
     const setFilerCreator = (filter: TaskFilterType, todoListID: string) => {
         return () => props.changeFilter(filter, todoListID)
@@ -53,24 +36,12 @@ const TodoList: React.FC<TodoListPropsType> = (props) => {
         }, 500)
     }
 
-    const inputStyle = `${style.input_style} ${inputError ? style.input_error : ''}`
-
     return (
         <div className={style.todo_List}>
             <h3>{props.title}</h3>
             <Button callback={() => props.removeTodoList(props.todoListID)} title={'x'}/>
 
-            <div className={style.input_container}>
-                {inputError && <span className={style.input_message_error}>incorrect task name</span>}
-                <input
-                    className={inputStyle}
-                    type={"text"}
-                    onKeyDown={pressEnterHandler}
-                    onChange={inputChangeHandler}
-                    value={inputValue}
-                />
-                <Button callback={addTask} title={'add'}/>
-            </div>
+            <AddItemForm addItem={addTask} />
 
             <ul className={style.task_list}>
                 {props.tasks.map((item) => {

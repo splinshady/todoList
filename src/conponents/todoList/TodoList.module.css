@@ -9,9 +9,6 @@
     box-shadow: 15px 15px 20px rgba(0,0,0,0.1), -15px -15px 20px #fff;
 }
 
-
-
-
 .task_list {
     display: flex;
     flex-direction: column;
@@ -32,39 +29,6 @@
 .task_item_checked {
     text-decoration: line-through;
     color: hotpink;
-}
-
-.input_container {
-    display: flex;
-    align-items: center;
-    position: relative;
-    gap: 20px;
-}
-
-.input_style {
-    width: 100%;
-    height: 100%;
-    outline: none;
-    box-sizing: border-box;
-    border: 1px solid black;
-    border-radius: 3px;
-}
-
-.input_message_error {
-    position: absolute;
-    left: 10px;
-    top: -7px;
-    color: red;
-    font-size: 0.7em;
-    background: linear-gradient(to bottom, #eff7ff, #fff);
-    border-left: 1px solid red;
-    border-right: 1px solid red;
-    border-radius: 2px;
-    padding: 0 5px;
-}
-
-.input_error {
-    border: 1px solid red;
 }
 
 .filter_container {
