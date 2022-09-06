@@ -13,12 +13,10 @@ export const MutableSpan: React.FC<MutableSpanPropsType> = (props) => {
         setTitle(props.title)
         setEditMode(true)
     }
-
     const deactivateEditMode = () => {
         setEditMode(false)
         props.changeTitle(title)
     }
-
     const onChangeTitleHandler = (event: ChangeEvent<HTMLInputElement>) => {
         setTitle(event.currentTarget.value)
     }

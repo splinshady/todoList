@@ -10,7 +10,6 @@ export type TaskType = {
     title: string,
     isDone: boolean,
 }
-
 type TodoListPropsType = {
     title: string,
     tasks: Array<TaskType>,
@@ -26,7 +25,6 @@ type TodoListPropsType = {
 }
 
 const TodoList: React.FC<TodoListPropsType> = (props) => {
-
     const addTask = (title: string) => {
         props.addTask(title, props.todoListID)
     }
@@ -38,7 +36,6 @@ const TodoList: React.FC<TodoListPropsType> = (props) => {
             props.removeTask(id, props.todoListID)
         }, 500)
     }
-
     const changeListTitle = (newTitle: string) => {
         props.changeListTitle(props.todoListID, newTitle)
     }
@@ -49,9 +46,7 @@ const TodoList: React.FC<TodoListPropsType> = (props) => {
                 <MutableSpan changeTitle={changeListTitle} title={props.title}/>
             </h3>
             <Button callback={() => props.removeTodoList(props.todoListID)} title={'x'}/>
-
             <AddItemForm addItem={addTask} />
-
             <ul className={style.task_list}>
                 {props.tasks.map((item) => {
 
