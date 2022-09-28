@@ -32,9 +32,7 @@ const TodoList: React.FC<TodoListPropsType> = (props) => {
         return () => props.changeFilter(filter, todoListID)
     }
     const removeTask = (id: string) => {
-        setTimeout(() => {
-            props.removeTask(id, props.todoListID)
-        }, 500)
+        props.removeTask(id, props.todoListID)
     }
     const changeListTitle = (newTitle: string) => {
         props.changeListTitle(props.todoListID, newTitle)
@@ -46,7 +44,7 @@ const TodoList: React.FC<TodoListPropsType> = (props) => {
                 <MutableSpan changeTitle={changeListTitle} title={props.title}/>
             </h3>
             <Button callback={() => props.removeTodoList(props.todoListID)} title={'x'}/>
-            <AddItemForm addItem={addTask} />
+            <AddItemForm addItem={addTask}/>
             <ul className={style.task_list}>
                 {props.tasks.map((item) => {
 
@@ -55,7 +53,8 @@ const TodoList: React.FC<TodoListPropsType> = (props) => {
                     }
 
                     return (
-                        <li key={item.id} className={item.isDone ? `${style.task_item_checked} ${style.task_item}` : style.task_item}>
+                        <li key={item.id}
+                            className={item.isDone ? `${style.task_item_checked} ${style.task_item}` : style.task_item}>
                             <input type="checkbox"
                                    checked={item.isDone}
                                    onChange={event => props.changeTaskStatus(item.id, event.currentTarget.checked, props.todoListID)}/>

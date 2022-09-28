@@ -7,7 +7,9 @@ export type actionTypes =
     | ReturnType<typeof changeListTitleAC>
     | ReturnType<typeof changeListFilterAC>
 
-export const todoListReducer = (todoLists: TodoListsType[], action: actionTypes) => {
+const initialState: TodoListsType[] = []
+
+export const todoListReducer = (todoLists = initialState, action: actionTypes) => {
     switch (action.type) {
         case 'REMOVE-LIST': {
             return todoLists.filter(list => list.id !== action.id)
@@ -25,11 +27,9 @@ export const todoListReducer = (todoLists: TodoListsType[], action: actionTypes)
             return {...todoLists, list}
         }
         case 'CHANGE-LIST-FILTER': {
-            let list = todoLists.find(list => list.id === action.todoListID);
-            if (list) {
-                list.filter = action.filter;
-            }
-            return {...todoLists, list}
+            return todoLists.map(list => {
+                return list.id === action.todoListID ? {...list, filter: action.filter} : list
+            })
         }
         default: {
             return todoLists

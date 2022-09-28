@@ -1,6 +1,6 @@
 import {
     actionTypes,
-    addListAC,
+    addTodoListAC,
     changeListFilterAC,
     changeListTitleAC,
     removeListAC,
@@ -33,7 +33,7 @@ test('correct todolist should be add', () => {
         {id: todolistId2, title: "What to buy", filter: "all"},
     ]
 
-    const endState: TodoListsType[] = todoListReducer(startState, addListAC('aaa'))
+    const endState: TodoListsType[] = todoListReducer(startState, addTodoListAC('aaa'))
 
     expect(endState.length).toBe(3);
     expect(endState[0].title).toBe('aaa');
