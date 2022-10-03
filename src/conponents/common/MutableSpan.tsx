@@ -1,11 +1,11 @@
-import React, {ChangeEvent, useState} from 'react';
+import React, {ChangeEvent, memo, useState} from 'react';
 
 type MutableSpanPropsType = {
     title: string,
     changeTitle: (newTitle: string) => void,
 }
 
-export const MutableSpan: React.FC<MutableSpanPropsType> = (props) => {
+export const MutableSpan: React.FC<MutableSpanPropsType> = memo((props) => {
     const [editMode, setEditMode] = useState(false)
     const [title, setTitle] = useState('')
 
@@ -25,4 +25,4 @@ export const MutableSpan: React.FC<MutableSpanPropsType> = (props) => {
             ? <input type="text" value={title} onChange={onChangeTitleHandler} onBlur={deactivateEditMode} autoFocus/>
             : <span onDoubleClick={activateEditMode}>{props.title}</span>
     );
-};
+})

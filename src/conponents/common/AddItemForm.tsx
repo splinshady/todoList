@@ -1,4 +1,4 @@
-import React, {ChangeEvent, DetailedHTMLProps, InputHTMLAttributes, KeyboardEvent, useState} from 'react'
+import React, {ChangeEvent, DetailedHTMLProps, InputHTMLAttributes, KeyboardEvent, memo, useState} from 'react'
 import style from './AddItemForm.module.css'
 import Button from "./Button";
 
@@ -8,7 +8,7 @@ type AddItemFormPropsType = DefaultInputPropsType & {
     addItem: (title: string) => void
 }
 
-const AddItemForm: React.FC<AddItemFormPropsType> = (props) => {
+const AddItemForm: React.FC<AddItemFormPropsType> = memo((props) => {
     const [inputValue, setInputValue] = useState<string>('')
     const [inputError, setInputError] = useState<boolean>(false)
 
@@ -21,10 +21,6 @@ const AddItemForm: React.FC<AddItemFormPropsType> = (props) => {
         }
     }
 
-    const pressEnterHandler = (event: KeyboardEvent<HTMLInputElement>) => {
-        event.key === 'Enter' && props.addItem(inputValue)
-    }
-
     const addItem = () => {
         if (inputValue.trim()) {
             props.addItem(inputValue.trim())
@@ -32,6 +28,10 @@ const AddItemForm: React.FC<AddItemFormPropsType> = (props) => {
         } else {
             setInputError(true)
         }
+    }
+
+    const pressEnterHandler = (event: KeyboardEvent<HTMLInputElement>) => {
+        event.key === 'Enter' && addItem()
     }
 
     const inputStyle = `${style.input_style} ${inputError ? style.input_error : ''}`
@@ -49,6 +49,6 @@ const AddItemForm: React.FC<AddItemFormPropsType> = (props) => {
             <Button callback={addItem} title={'add'}/>
         </div>
     )
-}
+})
 
 export default AddItemForm
