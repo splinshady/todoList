@@ -3,24 +3,24 @@ import style from "../todoList/TodoList.module.css";
 import {MutableSpan} from "../common/MutableSpan";
 import Button from "../common/Button";
 import {TaskType} from "../todoList/TodoList";
-import {useDispatch} from "react-redux";
-import {changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "../../reducers/tasks-reducer";
 
 type TaskPropsType = {
     task: TaskType
     todoListID: string,
+    changeTaskStatus: (taskId: string, isDone: boolean, todoListID: string) => void,
+    changeTaskTitle: (taskId: string, newTitle: string, todoListID: string) => void,
+    removeTaskCallback: (taskId: string, todoListID: string) => void,
 }
 
-const Task: React.FC<TaskPropsType> = memo(({ ...props}) => {
-    const dispatch = useDispatch()
+const Task: React.FC<TaskPropsType> = memo((props) => {
     const changeTaskStatus = (event: ChangeEvent<HTMLInputElement>) => {
-        dispatch(changeTaskStatusAC(props.task.id, event.currentTarget.checked, props.todoListID))
+        props.changeTaskStatus(props.task.id, event.currentTarget.checked, props.todoListID)
     }
     const changeTaskTitle = (newTitle: string) => {
-        dispatch(changeTaskTitleAC(props.task.id, newTitle, props.todoListID))
+        props.changeTaskTitle(props.task.id, newTitle, props.todoListID)
     }
     const removeTaskCallback = () => {
-        dispatch(removeTaskAC(props.task.id, props.todoListID))
+        props.removeTaskCallback(props.task.id, props.todoListID)
     }
     return (
         <li key={props.task.id}

@@ -5,6 +5,8 @@ import style from "./TodoList.module.css";
 import AddItemForm from "../common/AddItemForm";
 import {MutableSpan} from "../common/MutableSpan";
 import Task from "../task/Task";
+import {useDispatch} from "react-redux";
+import {changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "../../reducers/tasks-reducer";
 
 export type TaskType = {
     id: string,
@@ -23,6 +25,16 @@ type TodoListPropsType = {
 }
 
 const TodoList: React.FC<TodoListPropsType> = memo(({addTask, changeListTitle, todoListID, ...props}) => {
+    const dispatch = useDispatch()
+    const changeTaskStatus = (taskId: string, isDone: boolean, todoListID: string) => {
+        dispatch(changeTaskStatusAC(taskId, isDone, todoListID))
+    }
+    const changeTaskTitle = (taskId: string, newTitle: string, todoListID: string) => {
+        dispatch(changeTaskTitleAC(taskId, newTitle, todoListID))
+    }
+    const removeTaskCallback = (taskId: string, todoListID: string) => {
+        dispatch(removeTaskAC(taskId, todoListID))
+    }
 
     const addTaskCallback = useCallback((title: string) => {
         addTask(title, todoListID)
@@ -30,7 +42,6 @@ const TodoList: React.FC<TodoListPropsType> = memo(({addTask, changeListTitle, t
     const setFilerCreator = (filter: TaskFilterType, todoListID: string) => {
         return () => props.changeFilter(filter, todoListID)
     }
-
     const changeListTitleCallback = useCallback((newTitle: string) => {
         changeListTitle(todoListID, newTitle)
     }, [changeListTitle, todoListID])
@@ -45,6 +56,9 @@ const TodoList: React.FC<TodoListPropsType> = memo(({addTask, changeListTitle, t
             <ul className={style.task_list}>
                 {props.tasks.map((item) => <Task key={item.id}
                                                  task={item}
+                                                 changeTaskStatus={changeTaskStatus}
+                                                 changeTaskTitle={changeTaskTitle}
+                                                 removeTaskCallback={removeTaskCallback}
                                                  todoListID={todoListID}/>)}
             </ul>
             <div className={style.filter_container}>

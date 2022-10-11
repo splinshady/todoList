@@ -4,7 +4,7 @@
     position: relative;
     gap: 20px;
     height: fit-content;
-    min-width: 200px;
+    max-width: 200px;
 }
 
 .input_style {
