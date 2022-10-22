@@ -1,5 +1,11 @@
-import {TaskFilterType, TodoListsType} from "../App";
 import {v1} from "uuid";
+import {TodolistType} from "../api/todolist-api";
+
+export type TaskFilterType = 'all' | 'active' | 'completed';
+
+export type TodolistDomainType = TodolistType & {
+    filter: TaskFilterType
+}
 
 export type actionTypes =
     ReturnType<typeof removeListAC>
@@ -7,15 +13,21 @@ export type actionTypes =
     | ReturnType<typeof changeListTitleAC>
     | ReturnType<typeof changeListFilterAC>
 
-const initialState: TodoListsType[] = []
+const initialState: TodolistDomainType[] = []
 
-export const todoListReducer = (todoLists: TodoListsType[] = initialState, action: actionTypes): TodoListsType[] => {
+export const todoListReducer = (todoLists: TodolistDomainType[] = initialState, action: actionTypes): TodolistDomainType[] => {
     switch (action.type) {
         case 'REMOVE-LIST': {
             return todoLists.filter(list => list.id !== action.id)
         }
         case 'ADD-TODOLIST': {
-            return [{id: action.todoListID, title: action.title, filter: 'all'}, ...todoLists]
+            return [{
+                id: action.todoListID,
+                title: action.title,
+                filter: 'all',
+                addedDate: '',
+                order: 0
+            }, ...todoLists]
         }
         case 'CHANGE-LIST-TITLE': {
             return todoLists.map(list => {

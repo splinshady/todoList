@@ -1,5 +1,4 @@
 import React, {memo, useCallback} from 'react';
-import {TaskFilterType} from "../../App";
 import Button from "../common/Button";
 import style from "./TodoList.module.css";
 import AddItemForm from "../common/AddItemForm";
@@ -7,12 +6,9 @@ import {MutableSpan} from "../common/MutableSpan";
 import Task from "../task/Task";
 import {useDispatch} from "react-redux";
 import {changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "../../reducers/tasks-reducer";
+import {TaskFilterType} from "../../reducers/todoLists-reducer";
+import {TaskStatuses, TaskType} from "../../api/todolist-api";
 
-export type TaskType = {
-    id: string,
-    title: string,
-    isDone: boolean,
-}
 type TodoListPropsType = {
     title: string,
     tasks: Array<TaskType>,
@@ -26,8 +22,8 @@ type TodoListPropsType = {
 
 const TodoList: React.FC<TodoListPropsType> = memo(({addTask, changeListTitle, todoListID, ...props}) => {
     const dispatch = useDispatch()
-    const changeTaskStatus = (taskId: string, isDone: boolean, todoListID: string) => {
-        dispatch(changeTaskStatusAC(taskId, isDone, todoListID))
+    const changeTaskStatus = (taskId: string, status: TaskStatuses, todoListID: string) => {
+        dispatch(changeTaskStatusAC(taskId, status, todoListID))
     }
     const changeTaskTitle = (taskId: string, newTitle: string, todoListID: string) => {
         dispatch(changeTaskTitleAC(taskId, newTitle, todoListID))

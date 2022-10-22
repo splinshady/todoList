@@ -1,18 +1,19 @@
 import React, {useCallback} from 'react';
 import './App.css';
-import TodoList, {TaskType} from "./conponents/todoList/TodoList";
+import TodoList from "./conponents/todoList/TodoList";
 import AddItemForm from "./conponents/common/AddItemForm";
 import {useDispatch, useSelector} from "react-redux";
-import {addTodoListAC, changeListFilterAC, changeListTitleAC, removeListAC} from "./reducers/todoLists-reducer";
+import {
+    addTodoListAC,
+    changeListFilterAC,
+    changeListTitleAC,
+    removeListAC,
+    TaskFilterType, TodolistDomainType
+} from "./reducers/todoLists-reducer";
 import {addTaskAC} from "./reducers/tasks-reducer";
 import {AppRootStateType} from "./state/store";
+import {TaskStatuses, TaskType} from "./api/todolist-api";
 
-export type TaskFilterType = 'all' | 'active' | 'completed';
-export type TodoListsType = {
-    id: string,
-    title: string,
-    filter: TaskFilterType
-}
 export type TasksType = {
     [key: string]: Array<TaskType>
 }
@@ -20,7 +21,7 @@ export type TasksType = {
 function App() {
     const dispatch = useDispatch()
     const allTasks = useSelector<AppRootStateType, TasksType>(state => state.tasks)
-    const todoLists = useSelector<AppRootStateType, TodoListsType[]>(state => state.todoLists)
+    const todoLists = useSelector<AppRootStateType, TodolistDomainType[]>(state => state.todoLists)
 
     const addTask = useCallback((inputValue: string, todoListID: string) => {
         dispatch(addTaskAC(inputValue, todoListID))
@@ -39,15 +40,15 @@ function App() {
         dispatch(changeListFilterAC(filter, todoListID))
     }, [dispatch])
 
-    const tasksForRender = (todoList: TodoListsType, tasks: TasksType) => {
+    const tasksForRender = (todoList: TodolistDomainType, tasks: TasksType) => {
         let currentTasks = tasks[todoList.id];
         switch (todoList.filter) {
             case 'active': {
-                currentTasks = currentTasks.filter(item => !item.isDone)
+                currentTasks = currentTasks.filter(item => item.status === TaskStatuses.New)
                 break;
             }
             case 'completed': {
-                currentTasks = currentTasks.filter(item => item.isDone)
+                currentTasks = currentTasks.filter(item => item.status === TaskStatuses.Completed)
                 break;
             }
         }

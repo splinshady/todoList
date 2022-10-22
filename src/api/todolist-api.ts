@@ -1,4 +1,5 @@
-import axios from 'axios'
+import axios from "axios";
+
 const axiosInstance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.1/',
     withCredentials: true,
@@ -43,21 +44,21 @@ export const todolistAPI = {
             completed: false,
             status: 3,
             priority: 4,
-            startDate: new Date(),
-            deadline: new Date(),
+            startDate: '',
+            deadline: '',
         }
         return axiosInstance.put<TaskDataType>(`/todo-lists/${todolistId}/tasks/${taskID}`, data)
     },
 }
 
-type TodolistType = {
+export type TodolistType = {
     id: string
     addedDate: string
     order: number
     title: string
 }
 
-type ResponseType<T = {}> = {
+export type ResponseType<T = {}> = {
     resultCode: number
     messages: Array<string>
     fieldsErrors: Array<string>
@@ -66,24 +67,39 @@ type ResponseType<T = {}> = {
     }
 }
 
-type TaskDataType = {
+export enum TaskStatuses {
+    New = 0,
+    InProgress = 1,
+    Completed = 2,
+    Draft = 3,
+}
+
+export enum TaskPriorities {
+    Low = 0,
+    Middle = 1,
+    Hi = 2,
+    Urgently = 3,
+    Later = 4,
+}
+
+export type TaskDataType = {
     description: string
     title: string
     completed: boolean
-    status: number
-    priority: number
-    startDate: Date
-    deadline: Date
+    status: TaskStatuses
+    priority: TaskPriorities
+    startDate: string
+    deadline: string
 }
 
-type TaskType = TaskDataType & {
+export type TaskType = TaskDataType & {
     id: string
     todoListId: string
     order: number
-    addedDate: Date
+    addedDate: string
 }
 
-type ResponseGetTaskType = {
+export type ResponseGetTaskType = {
     error: string
     items: TaskType[]
     totalCount: number
