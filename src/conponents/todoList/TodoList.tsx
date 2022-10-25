@@ -1,11 +1,11 @@
-import React, {memo, useCallback} from 'react';
+import React, {memo, useCallback, useEffect} from 'react';
 import Button from "../common/Button";
 import style from "./TodoList.module.css";
 import AddItemForm from "../common/AddItemForm";
 import {MutableSpan} from "../common/MutableSpan";
 import Task from "../task/Task";
 import {useDispatch} from "react-redux";
-import {changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "../../reducers/tasks-reducer";
+import {changeTaskStatusAC, changeTaskTitleAC, fetchTasksTC, removeTaskAC} from "../../reducers/tasks-reducer";
 import {TaskFilterType} from "../../reducers/todoLists-reducer";
 import {TaskStatuses, TaskType} from "../../api/todolist-api";
 
@@ -41,6 +41,10 @@ const TodoList: React.FC<TodoListPropsType> = memo(({addTask, changeListTitle, t
     const changeListTitleCallback = useCallback((newTitle: string) => {
         changeListTitle(todoListID, newTitle)
     }, [changeListTitle, todoListID])
+
+    useEffect(() => {
+        dispatch(fetchTasksTC(todoListID))
+    }, [])
 
     return (
         <div className={style.todo_List}>

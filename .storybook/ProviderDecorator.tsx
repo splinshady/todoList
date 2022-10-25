@@ -11,7 +11,7 @@ const rootReducer = combineReducers({
 
 type AppRootStateType = ReturnType<typeof rootReducer>
 
-const initialState: AppRootStateType = {
+const initialState: any = {
     tasks: {
         ['todolistID1']: [
             {id: 'taskid1', title: 'css', isDone: false},

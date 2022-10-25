@@ -56,5 +56,21 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@storybook/addon-actions": "^6.5.12",
+    "@storybook/addon-essentials": "^6.5.12",
+    "@storybook/addon-interactions": "^6.5.12",
+    "@storybook/addon-links": "^6.5.12",
+    "@storybook/builder-webpack4": "^6.5.12",
+    "@storybook/manager-webpack4": "^6.5.12",
+    "@storybook/node-logger": "^6.5.12",
+    "@storybook/preset-create-react-app": "^3.2.0",
+    "@storybook/react": "^6.5.12",
+    "@storybook/testing-library": "^0.0.13",
+    "jest-image-snapshot": "^5.2.0",
+    "jest-puppeteer": "^6.1.1",
+    "puppeteer": "^18.2.1",
+    "start-server-and-test": "^1.14.0"
   }
 }

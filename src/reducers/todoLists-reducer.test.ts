@@ -2,11 +2,12 @@ import {
     actionTypes,
     addTodoListAC,
     changeListFilterAC,
-    changeListTitleAC,
+    changeListTitleAC, getTodoListsAC,
     removeListAC, TodolistDomainType,
     todoListReducer
 } from './todoLists-reducer';
 import {v1} from 'uuid';
+import {TodolistType} from "../api/todolist-api";
 
 test('correct todolist should be removed', () => {
     let todolistId1 = v1();
@@ -64,4 +65,18 @@ test('correct todolist change filter', () => {
     const endState: TodolistDomainType[] = todoListReducer(startState, changeListFilterAC('active', todolistId1))
 
     expect(endState[0].filter).toBe('active');
+});
+
+test('correct set todolist to the state', () => {
+    let todolistId1 = v1();
+    let todolistId2 = v1();
+
+    const startState: Array<TodolistType> = [
+        {id: todolistId1, title: "What to learn",  addedDate: '', order: 0},
+        {id: todolistId2, title: "What to buy",  addedDate: '', order: 0}
+    ]
+
+    const endState: TodolistDomainType[] = todoListReducer([], getTodoListsAC(startState))
+
+    expect(endState.length).toBe(2);
 });

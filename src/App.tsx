@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import './App.css';
 import TodoList from "./conponents/todoList/TodoList";
 import AddItemForm from "./conponents/common/AddItemForm";
@@ -6,17 +6,19 @@ import {useDispatch, useSelector} from "react-redux";
 import {
     addTodoListAC,
     changeListFilterAC,
-    changeListTitleAC,
+    changeListTitleAC, fetchTodoListsTC,
     removeListAC,
     TaskFilterType, TodolistDomainType
 } from "./reducers/todoLists-reducer";
-import {addTaskAC} from "./reducers/tasks-reducer";
+import {addTaskAC, fetchTasksTC} from "./reducers/tasks-reducer";
 import {AppRootStateType} from "./state/store";
 import {TaskStatuses, TaskType} from "./api/todolist-api";
+import {useAppDispatch} from "./hooks-ts";
 
 export type TasksType = {
     [key: string]: Array<TaskType>
 }
+
 
 function App() {
     const dispatch = useDispatch()
@@ -26,7 +28,6 @@ function App() {
     const addTask = useCallback((inputValue: string, todoListID: string) => {
         dispatch(addTaskAC(inputValue, todoListID))
     }, [dispatch])
-
     const removeTodoList = useCallback((todoListID: string) => {
         dispatch(removeListAC(todoListID))
     }, [dispatch])
@@ -54,6 +55,10 @@ function App() {
         }
         return currentTasks
     }
+
+    useEffect(() => {
+        dispatch(fetchTodoListsTC())
+    }, [])
 
     return (
         <div className="App">
