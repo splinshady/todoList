@@ -6,8 +6,8 @@ import {useDispatch, useSelector} from "react-redux";
 import {
     addTodoListAC,
     changeListFilterAC,
-    changeListTitleAC, fetchTodoListsTC,
-    removeListAC,
+    changeListTitleAC, changeTodoListsTitleTC, createTodoListsTC, fetchTodoListsTC,
+    removeListAC, removeTodoListsTC,
     TaskFilterType, TodolistDomainType
 } from "./reducers/todoLists-reducer";
 import {addTaskTC} from "./reducers/tasks-reducer";
@@ -28,13 +28,13 @@ function App() {
         dispatch(addTaskTC(todoListID, inputValue))
     }, [dispatch])
     const removeTodoList = useCallback((todoListID: string) => {
-        dispatch(removeListAC(todoListID))
+        dispatch(removeTodoListsTC(todoListID))
     }, [dispatch])
     const addTodoList = useCallback((title: string) => {
-        dispatch(addTodoListAC(title))
+        dispatch(createTodoListsTC(title))
     }, [dispatch])
     const changeListTitle = useCallback((todoListID: string, newTitle: string) => {
-        dispatch(changeListTitleAC(todoListID, newTitle))
+        dispatch(changeTodoListsTitleTC(todoListID, newTitle))
     }, [dispatch])
     const changeFilter = useCallback((filter: TaskFilterType, todoListID: string) => {
         dispatch(changeListFilterAC(filter, todoListID))
