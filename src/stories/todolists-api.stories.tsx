@@ -100,7 +100,7 @@ export const deleteTasks = () => {
     return <div>{JSON.stringify(state)}</div>
 }
 
-export const updateTasks = () => {
+/*export const updateTasks = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
         const listID = 'd4792874-cf46-4017-b48e-135806307e98'
@@ -112,4 +112,4 @@ export const updateTasks = () => {
     }, [])
 
     return <div>{JSON.stringify(state)}</div>
-}
+}*/

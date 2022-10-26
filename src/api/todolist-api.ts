@@ -37,17 +37,8 @@ export const todolistAPI = {
         return axiosInstance.delete<ResponseType>(`/todo-lists/${todolistId}/tasks/${taskID}`)
     },
 
-    updateTask(todolistId: string, taskID: string) {
-        const data: TaskDataType = {
-            title: 'new Title',
-            description: 'new description',
-            completed: false,
-            status: 3,
-            priority: 4,
-            startDate: '',
-            deadline: '',
-        }
-        return axiosInstance.put<TaskDataType>(`/todo-lists/${todolistId}/tasks/${taskID}`, data)
+    updateTask(todolistId: string, taskID: string, data: TaskDataType) {
+        return axiosInstance.put<ResponseType<TaskDataType>>(`/todo-lists/${todolistId}/tasks/${taskID}`, data)
     },
 }
 

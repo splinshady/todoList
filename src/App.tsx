@@ -10,23 +10,22 @@ import {
     removeListAC,
     TaskFilterType, TodolistDomainType
 } from "./reducers/todoLists-reducer";
-import {addTaskAC, fetchTasksTC} from "./reducers/tasks-reducer";
+import {addTaskTC} from "./reducers/tasks-reducer";
 import {AppRootStateType} from "./state/store";
 import {TaskStatuses, TaskType} from "./api/todolist-api";
-import {useAppDispatch} from "./hooks-ts";
 
 export type TasksType = {
     [key: string]: Array<TaskType>
 }
 
-
 function App() {
+
     const dispatch = useDispatch()
     const allTasks = useSelector<AppRootStateType, TasksType>(state => state.tasks)
     const todoLists = useSelector<AppRootStateType, TodolistDomainType[]>(state => state.todoLists)
 
     const addTask = useCallback((inputValue: string, todoListID: string) => {
-        dispatch(addTaskAC(inputValue, todoListID))
+        dispatch(addTaskTC(todoListID, inputValue))
     }, [dispatch])
     const removeTodoList = useCallback((todoListID: string) => {
         dispatch(removeListAC(todoListID))
