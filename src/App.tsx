@@ -13,6 +13,8 @@ import {
 import {addTaskTC} from "./reducers/tasks-reducer";
 import {AppRootStateType} from "./state/store";
 import {TaskStatuses, TaskType} from "./api/todolist-api";
+import { LinearProgress } from '@mui/material';
+import {RequestStatusType} from "./reducers/app-reducer";
 
 export type TasksType = {
     [key: string]: Array<TaskType>
@@ -21,6 +23,7 @@ export type TasksType = {
 function App() {
 
     const dispatch = useDispatch()
+    const requestStatus = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
     const allTasks = useSelector<AppRootStateType, TasksType>(state => state.tasks)
     const todoLists = useSelector<AppRootStateType, TodolistDomainType[]>(state => state.todoLists)
 
@@ -60,25 +63,28 @@ function App() {
     }, [])
 
     return (
-        <div className="App">
-            <AddItemForm addItem={addTodoList}/>
-            {
-                todoLists.map((todoList) => {
+        <>
+            {requestStatus === 'loading' && <LinearProgress color="info"/>}
+            <div className="App">
+                <AddItemForm addItem={addTodoList}/>
+                {
+                    todoLists.map((todoList) => {
 
-                    return <TodoList
-                        removeTodoList={removeTodoList}
-                        todoListID={todoList.id}
-                        key={todoList.id}
-                        title={todoList.title}
-                        tasks={tasksForRender(todoList, allTasks)}
-                        changeFilter={changeFilter}
-                        addTask={addTask}
-                        filter={todoList.filter}
-                        changeListTitle={changeListTitle}
-                    />
-                })
-            }
-        </div>
+                        return <TodoList
+                            removeTodoList={removeTodoList}
+                            todoListID={todoList.id}
+                            key={todoList.id}
+                            title={todoList.title}
+                            tasks={tasksForRender(todoList, allTasks)}
+                            changeFilter={changeFilter}
+                            addTask={addTask}
+                            filter={todoList.filter}
+                            changeListTitle={changeListTitle}
+                        />
+                    })
+                }
+            </div>
+        </>
     );
 }
 
