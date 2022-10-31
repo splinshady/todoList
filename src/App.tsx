@@ -4,17 +4,16 @@ import TodoList from "./conponents/todoList/TodoList";
 import AddItemForm from "./conponents/common/AddItemForm";
 import {useDispatch, useSelector} from "react-redux";
 import {
-    addTodoListAC,
-    changeListFilterAC,
-    changeListTitleAC, changeTodoListsTitleTC, createTodoListsTC, fetchTodoListsTC,
-    removeListAC, removeTodoListsTC,
+    changeListFilterAC, changeTodoListsTitleTC, createTodoListsTC, fetchTodoListsTC,
+    removeTodoListsTC,
     TaskFilterType, TodolistDomainType
 } from "./reducers/todoLists-reducer";
 import {addTaskTC} from "./reducers/tasks-reducer";
 import {AppRootStateType} from "./state/store";
 import {TaskStatuses, TaskType} from "./api/todolist-api";
-import { LinearProgress } from '@mui/material';
+import {LinearProgress} from '@mui/material';
 import {RequestStatusType} from "./reducers/app-reducer";
+import CustomizedSnackbars from "./conponents/common/ErrorSnackbar/ErrorSnackbar";
 
 export type TasksType = {
     [key: string]: Array<TaskType>
@@ -65,7 +64,9 @@ function App() {
     return (
         <>
             {requestStatus === 'loading' && <LinearProgress color="info"/>}
+
             <div className="App">
+                <CustomizedSnackbars/>
                 <AddItemForm addItem={addTodoList}/>
                 {
                     todoLists.map((todoList) => {
@@ -80,6 +81,7 @@ function App() {
                             addTask={addTask}
                             filter={todoList.filter}
                             changeListTitle={changeListTitle}
+                            entityStatus={todoList.entityStatus}
                         />
                     })
                 }

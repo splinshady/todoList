@@ -14,8 +14,8 @@ test('correct todolist should be removed', () => {
     let todolistId2 = v1();
 
     const startState: TodolistDomainType[] = [
-        {id: todolistId1, title: "What to learn", filter: "all", addedDate: '', order: 0},
-        {id: todolistId2, title: "What to buy", filter: "all", addedDate: '', order: 0}
+        {id: todolistId1, title: "What to learn", filter: "all", entityStatus: 'idle', addedDate: '', order: 0},
+        {id: todolistId2, title: "What to buy", filter: "all", entityStatus: 'idle', addedDate: '', order: 0}
     ]
 
     const endState: TodolistDomainType[] = todoListReducer(startState, removeListAC(todolistId1))
@@ -44,8 +44,8 @@ test('correct todolist change title', () => {
     let todolistId2 = v1();
 
     const startState: Array<TodolistDomainType> = [
-        {id: todolistId1, title: "What to learn", filter: "all", addedDate: '', order: 0},
-        {id: todolistId2, title: "What to buy", filter: "all", addedDate: '', order: 0}
+        {id: todolistId1, title: "What to learn", filter: "all", entityStatus: 'idle', addedDate: '', order: 0},
+        {id: todolistId2, title: "What to buy", filter: "all", entityStatus: 'idle', addedDate: '', order: 0}
     ]
 
     const endState: TodolistDomainType[] = todoListReducer(startState, changeListTitleAC(todolistId1, 'new'))
@@ -58,8 +58,8 @@ test('correct todolist change filter', () => {
     let todolistId2 = v1();
 
     const startState: Array<TodolistDomainType> = [
-        {id: todolistId1, title: "What to learn", filter: "all", addedDate: '', order: 0},
-        {id: todolistId2, title: "What to buy", filter: "all", addedDate: '', order: 0}
+        {id: todolistId1, title: "What to learn", filter: "all", addedDate: '', entityStatus: 'idle', order: 0},
+        {id: todolistId2, title: "What to buy", filter: "all", addedDate: '', entityStatus: 'idle', order: 0}
     ]
 
     const endState: TodolistDomainType[] = todoListReducer(startState, changeListFilterAC('active', todolistId1))
@@ -72,8 +72,8 @@ test('correct set todolist to the state', () => {
     let todolistId2 = v1();
 
     const startState: Array<TodolistType> = [
-        {id: todolistId1, title: "What to learn",  addedDate: '', order: 0},
-        {id: todolistId2, title: "What to buy",  addedDate: '', order: 0}
+        {id: todolistId1, title: "What to learn", addedDate: '', order: 0},
+        {id: todolistId2, title: "What to buy", addedDate: '', order: 0}
     ]
 
     const endState: TodolistDomainType[] = todoListReducer([], getTodoListsAC(startState))

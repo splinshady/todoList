@@ -36,3 +36,14 @@
 .button_active {
     background: linear-gradient(45deg, #56CCF2, #bb95f1);
 }
+
+.button_disabled:disabled {
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    background: white;
+    color: gray;
+    cursor: default;
+}
+
+.button_disabled:hover::after {
+    opacity: 0;
+}

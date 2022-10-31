@@ -1,9 +1,9 @@
 import {TasksType} from "../App";
 import {addTodoListAC, getTodoListsAC, removeListAC} from "./todoLists-reducer";
-import {TaskDataType, TaskPriorities, TaskStatuses, TaskType, todolistAPI} from "../api/todolist-api";
+import {TaskStatuses, TaskType, todolistAPI} from "../api/todolist-api";
 import {Dispatch} from "redux";
 import {AppRootStateType} from "../state/store";
-import {setAppStatus} from "./app-reducer";
+import {setAppError, setAppStatus} from "./app-reducer";
 
 export type actionTypes = ReturnType<typeof removeTaskAC
     | typeof addTaskAC
@@ -109,8 +109,15 @@ export const addTaskTC = (todolistId: string, title: string) => (dispatch: Dispa
     dispatch(setAppStatus('loading'))
     todolistAPI.createTask(todolistId, title)
         .then(response => {
-            response.data.resultCode === 0 && dispatch(addTaskAC(response.data.data.item, todolistId))
-            dispatch(setAppStatus('succeeded'))
+            if (response.data.resultCode === 0) {
+                dispatch(addTaskAC(response.data.data.item, todolistId))
+            }
+            if (response.data.resultCode === 1) {
+                response.data.messages[0]
+                    ? dispatch(setAppError(response.data.messages[0]))
+                    : dispatch(setAppError('something went wrong'))
+            }
+            //dispatch(setAppStatus('succeeded'))
         })
 }
 export const updateTaskStatusTC = (todoListID: string, status: TaskStatuses, taskID: string) => (dispatch: Dispatch, getState: () => AppRootStateType) => {
@@ -127,7 +134,6 @@ export const updateTaskStatusTC = (todoListID: string, status: TaskStatuses, tas
             dispatch(setAppStatus('succeeded'))
         })
 }
-
 export const updateTaskTitleTC = (todoListID: string, title: string, taskID: string) => (dispatch: Dispatch, getState: () => AppRootStateType) => {
     dispatch(setAppStatus('loading'))
     const currentTodoListTasks = getState().tasks[todoListID]

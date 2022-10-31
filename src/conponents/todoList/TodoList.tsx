@@ -5,13 +5,12 @@ import AddItemForm from "../common/AddItemForm";
 import {MutableSpan} from "../common/MutableSpan";
 import Task from "../task/Task";
 import {
-    changeTaskStatusAC,
-    changeTaskTitleAC,
     fetchTasksTC, removeTaskTC, updateTaskStatusTC, updateTaskTitleTC
 } from "../../reducers/tasks-reducer";
 import {TaskFilterType} from "../../reducers/todoLists-reducer";
 import {TaskStatuses, TaskType} from "../../api/todolist-api";
 import {useDispatch} from "react-redux";
+import {RequestStatusType} from "../../reducers/app-reducer";
 
 type TodoListPropsType = {
     title: string,
@@ -20,6 +19,7 @@ type TodoListPropsType = {
     addTask: (inputValue: string, todoListID: string) => void,
     filter: TaskFilterType,
     todoListID: string,
+    entityStatus: RequestStatusType,
     removeTodoList: (todoListID: string) => void,
     changeListTitle: (todoListID: string, newTitle: string) => void
 }
@@ -57,7 +57,7 @@ const TodoList: React.FC<TodoListPropsType> = memo(({addTask, changeListTitle, t
             <h3>
                 <MutableSpan changeTitle={changeListTitleCallback} title={props.title}/>
             </h3>
-            <Button callback={() => props.removeTodoList(todoListID)} title={'delete todolist'}/>
+            <Button disabled={props.entityStatus === 'loading'} callback={() => props.removeTodoList(todoListID)} title={'delete todolist'}/>
             <AddItemForm addItem={addTaskCallback}/>
             <ul className={style.task_list}>
                 {props.tasks.map((item) => <Task key={item.id}
