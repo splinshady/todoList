@@ -6,6 +6,7 @@ type DefaultInputPropsType = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElem
 
 type AddItemFormPropsType = DefaultInputPropsType & {
     addItem: (title: string) => void
+    disabled?: boolean
 }
 
 const AddItemForm: React.FC<AddItemFormPropsType> = memo((props) => {
@@ -42,11 +43,12 @@ const AddItemForm: React.FC<AddItemFormPropsType> = memo((props) => {
             <input
                 className={inputStyle}
                 type={"text"}
+                disabled={props.disabled}
                 onKeyDown={pressEnterHandler}
                 onChange={inputChangeHandler}
                 value={inputValue}
             />
-            <Button callback={addItem} title={'add'}/>
+            <Button callback={addItem} title={'add'} disabled={props.disabled}/>
         </div>
     )
 })

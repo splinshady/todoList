@@ -58,7 +58,7 @@ const TodoList: React.FC<TodoListPropsType> = memo(({addTask, changeListTitle, t
                 <MutableSpan changeTitle={changeListTitleCallback} title={props.title}/>
             </h3>
             <Button disabled={props.entityStatus === 'loading'} callback={() => props.removeTodoList(todoListID)} title={'delete todolist'}/>
-            <AddItemForm addItem={addTaskCallback}/>
+            <AddItemForm addItem={addTaskCallback} disabled={props.entityStatus === 'loading'}/>
             <ul className={style.task_list}>
                 {props.tasks.map((item) => <Task key={item.id}
                                                  task={item}
