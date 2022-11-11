@@ -1,7 +1,7 @@
 import React, {ChangeEvent, memo} from 'react';
 import style from "../todoList/TodoList.module.css";
-import {MutableSpan} from "../common/MutableSpan";
-import Button from "../common/Button";
+import {MutableSpan} from "../../conponents/MutableSpan";
+import Button from "../../conponents/Button";
 import {TaskStatuses, TaskType} from "../../api/todolist-api";
 
 type TaskPropsType = {

@@ -1,8 +1,8 @@
 import React, {memo, useCallback, useEffect} from 'react';
-import Button from "../common/Button";
+import Button from "../../conponents/Button";
 import style from "./TodoList.module.css";
-import AddItemForm from "../common/AddItemForm";
-import {MutableSpan} from "../common/MutableSpan";
+import AddItemForm from "../../conponents/AddItemForm";
+import {MutableSpan} from "../../conponents/MutableSpan";
 import Task from "../task/Task";
 import {
     fetchTasksTC, removeTaskTC, updateTaskStatusTC, updateTaskTitleTC
