@@ -7,8 +7,14 @@ import FormGroup from '@mui/material/FormGroup';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import {useFormik} from "formik";
+import {loginTC} from "./authReducer";
+import {useDispatch, useSelector} from "react-redux";
+import {Navigate} from "react-router-dom";
+import {AppRootStateType} from "../../app/store";
 
 export const Login = () => {
+  const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
+  const dispatch = useDispatch()
 
   const formik = useFormik({
     initialValues: {
@@ -31,10 +37,14 @@ export const Login = () => {
       return errors
     },
     onSubmit: values => {
-      alert(JSON.stringify(values));
+      dispatch(loginTC(values))
       formik.resetForm()
     },
   })
+
+  if (isLoggedIn) {
+    return <Navigate to={"/"}/>
+  }
 
   return <Grid container justifyContent={'center'}>
     <Grid item justifyContent={'center'}>

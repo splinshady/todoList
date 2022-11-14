@@ -100,8 +100,10 @@ export const fetchTodoListsTC = () => (dispatch: Dispatch) => {
     todolistAPI.getTodolist()
         .then(response => {
             dispatch(getTodoListsAC(response.data))
-            dispatch(setAppStatus('succeeded'))
         })
+      .finally(() => {
+        dispatch(setAppStatus('succeeded'))
+      })
 }
 export const removeTodoListsTC = (todoListID: string) => (dispatch: Dispatch) => {
     dispatch(setAppStatus('loading'))

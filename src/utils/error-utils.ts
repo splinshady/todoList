@@ -8,6 +8,11 @@ export const handleServerAppError = <T>(data: ResponseType<T>, dispatch: Dispatc
             ? dispatch(setAppError(data.messages[0]))
             : dispatch(setAppError('something went wrong'))
     }
+  if( data.resultCode === 10) {
+    data.messages[0]
+      ? dispatch(setAppError(data.messages[0]))
+      : dispatch(setAppError('something went wrong'))
+  }
 }
 
 export const handleServerNetworkError = (error: {message: string}, dispatch: Dispatch) => {
