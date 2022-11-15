@@ -1,7 +1,6 @@
 import React, {useEffect} from 'react';
 import './App.css';
 import {useDispatch, useSelector} from "react-redux";
-import {fetchTodoListsTC} from "../reducers/todoLists-reducer";
 import {AppRootStateType} from "./store";
 import {TaskType} from "../api/todolist-api";
 import {AppBar, CircularProgress, IconButton, LinearProgress, Toolbar, Typography} from '@mui/material';
@@ -12,7 +11,7 @@ import Button from "@mui/material/Button";
 import {Menu} from "@mui/icons-material";
 import {Navigate, Route, Routes} from "react-router-dom";
 import TodoListsPage from "../features/todoList/TodoListsPage";
-import {logoutTC} from "../features/login/authReducer";
+import {logoutTC} from "../features/login/auth-reducer";
 
 export type TasksType = {
   [key: string]: Array<TaskType>

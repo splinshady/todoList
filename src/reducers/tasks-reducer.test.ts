@@ -94,7 +94,7 @@ beforeEach(() => {
 
 test('correct task should be deleted from correct array', () => {
 
-    const action = removeTaskAC('2', 'todolistId2')
+    const action = removeTaskAC({taskId: '2', todoListID: 'todolistId2'})
     const endState: TasksType = tasksReducer(startState, action)
 
     expect(endState['todolistId2'].length).toEqual(2)
@@ -114,7 +114,7 @@ test('correct task should be deleted from correct array', () => {
 
 test('status of specified task should be changed', () => {
 
-    const action = changeTaskStatusAC('2', TaskStatuses.New, 'todolistId2')
+    const action = changeTaskStatusAC({taskId: '2', todoListID: 'todolistId2', status: TaskStatuses.New})
 
     const endState = tasksReducer(startState, action)
 
@@ -124,7 +124,7 @@ test('status of specified task should be changed', () => {
 
 test('title of specified task should be changed', () => {
 
-    const action = changeTaskTitleAC('3', 'new title', 'todolistId1')
+    const action = changeTaskTitleAC({taskId: '3', title: 'new title', todoListID: 'todolistId1'})
 
     const endState = tasksReducer(startState, action)
 
@@ -134,7 +134,7 @@ test('title of specified task should be changed', () => {
 
 test('property with todolistId should be deleted', () => {
 
-    const action = removeListAC('todolistId2')
+    const action = removeListAC({id: 'todolistId2'})
 
     const endState = tasksReducer(startState, action)
 

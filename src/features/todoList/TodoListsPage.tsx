@@ -3,7 +3,6 @@ import style from './TodoListsPage.module.css';
 import AddItemForm from "../../conponents/AddItemForm";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../app/store";
-import {initializeAppTC, RequestStatusType} from "../../reducers/app-reducer";
 import {
   changeListFilterAC,
   changeTodoListsTitleTC,
@@ -41,7 +40,7 @@ const TodoListsPage = () => {
     dispatch(changeTodoListsTitleTC(todoListID, newTitle))
   }, [dispatch])
   const changeFilter = useCallback((filter: TaskFilterType, todoListID: string) => {
-    dispatch(changeListFilterAC(filter, todoListID))
+    dispatch(changeListFilterAC({todoListID, filter}))
   }, [dispatch])
 
   const tasksForRender = (todoList: TodolistDomainType, tasks: TasksType) => {

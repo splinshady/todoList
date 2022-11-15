@@ -1,6 +1,4 @@
 import {
-    actionTypes,
-    addTodoListAC,
     changeListFilterAC,
     changeListTitleAC, getTodoListsAC,
     removeListAC, TodolistDomainType,
@@ -18,7 +16,7 @@ test('correct todolist should be removed', () => {
         {id: todolistId2, title: "What to buy", filter: "all", entityStatus: 'idle', addedDate: '', order: 0}
     ]
 
-    const endState: TodolistDomainType[] = todoListReducer(startState, removeListAC(todolistId1))
+    const endState: TodolistDomainType[] = todoListReducer(startState, removeListAC({id: todolistId1}))
 
     expect(endState.length).toBe(1);
     expect(endState[0].id).toBe(todolistId2);
@@ -48,7 +46,7 @@ test('correct todolist change title', () => {
         {id: todolistId2, title: "What to buy", filter: "all", entityStatus: 'idle', addedDate: '', order: 0}
     ]
 
-    const endState: TodolistDomainType[] = todoListReducer(startState, changeListTitleAC(todolistId1, 'new'))
+    const endState: TodolistDomainType[] = todoListReducer(startState, changeListTitleAC({newTitle: 'new', todoListID: todolistId1}))
 
     expect(endState[0].title).toBe('new');
 });
@@ -62,7 +60,7 @@ test('correct todolist change filter', () => {
         {id: todolistId2, title: "What to buy", filter: "all", addedDate: '', entityStatus: 'idle', order: 0}
     ]
 
-    const endState: TodolistDomainType[] = todoListReducer(startState, changeListFilterAC('active', todolistId1))
+    const endState: TodolistDomainType[] = todoListReducer(startState, changeListFilterAC({todoListID: todolistId1, filter: 'active'}))
 
     expect(endState[0].filter).toBe('active');
 });
@@ -76,7 +74,7 @@ test('correct set todolist to the state', () => {
         {id: todolistId2, title: "What to buy", addedDate: '', order: 0}
     ]
 
-    const endState: TodolistDomainType[] = todoListReducer([], getTodoListsAC(startState))
+    const endState: TodolistDomainType[] = todoListReducer([], getTodoListsAC({todoLists: startState}))
 
     expect(endState.length).toBe(2);
 });
