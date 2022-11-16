@@ -95,7 +95,6 @@ export const updateTaskStatusTC = (todoListID: string, status: TaskStatuses, tas
   }
   todolistAPI.updateTask(todoListID, taskID, {...task, status})
     .then(response => {
-      console.log(response)
       dispatch(changeTaskStatusAC({taskId: taskID, todoListID, status: response.data.data.item.status}))
       dispatch(setAppStatus({status: 'succeeded'}))
     })
