@@ -47,6 +47,7 @@ export const slice = createSlice({
 })
 
 export const tasksReducer = slice.reducer
+export default tasksReducer
 export const {removeTaskAC, addTaskAC, changeTaskStatusAC, changeTaskTitleAC, setTasksAC} = slice.actions
 
 //Thunk
