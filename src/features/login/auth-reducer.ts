@@ -1,25 +1,31 @@
 import {Dispatch} from 'redux'
 import {handleServerAppError, handleServerNetworkError} from "../../utils/error-utils";
-import {authAPI, LoginParamsType} from "../../api/todolist-api";
+import {authAPI, FieldsErrorsType, LoginParamsType} from "../../api/todolist-api";
 import {setAppStatus} from "../../reducers/app-reducer";
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {removeTaskTC} from "../../reducers/tasks-reducer";
+import {AxiosError} from "axios";
 
-export const loginTC = createAsyncThunk('auth/login', (data: LoginParamsType, thunkAPI) => {
+export const loginTC = createAsyncThunk<{isLoggedIn: boolean}, LoginParamsType, {
+  rejectValue: {errors: string[], fieldsErrors?: FieldsErrorsType[]}
+}>('auth/login', async (data, thunkAPI) => {
   thunkAPI.dispatch(setAppStatus({status: 'loading'}))
-  authAPI.login(data)
-    .then(res => {
-      if (res.data.resultCode === 0) {
-        thunkAPI.dispatch(setIsLoggedInAC({isLoggedIn: true}))
-      } else {
-        handleServerAppError<{ userId: number }>(res.data, thunkAPI.dispatch);
-      }
-    })
-    .catch((error) => {
-      handleServerNetworkError(error, thunkAPI.dispatch)
-    })
-    .finally(() => {
-      thunkAPI.dispatch(setAppStatus({status: 'succeeded'}))
-    })
+  try {
+    const res = await authAPI.login(data)
+    if (res.data.resultCode === 0) {
+      return {isLoggedIn: true}
+    } else {
+      handleServerAppError<{ userId: number }>(res.data, thunkAPI.dispatch);
+      return thunkAPI.rejectWithValue({errors: res.data.messages, fieldsErrors: res.data.fieldsErrors})
+    }
+  } catch (e: any) {
+    const error: AxiosError = e
+    handleServerNetworkError(error, thunkAPI.dispatch)
+    return thunkAPI.rejectWithValue({errors: [error.message], fieldsErrors: undefined})
+
+  } finally {
+    thunkAPI.dispatch(setAppStatus({status: 'succeeded'}))
+  }
 })
 
 const slice = createSlice({
@@ -28,9 +34,14 @@ const slice = createSlice({
     isLoggedIn: false
   } as initialAuthStateType,
   reducers: {
-    setIsLoggedInAC(state, action: PayloadAction<{isLoggedIn: boolean}>) {
+    setIsLoggedInAC(state, action: PayloadAction<{ isLoggedIn: boolean }>) {
       state.isLoggedIn = action.payload.isLoggedIn
     }
+  },
+  extraReducers: (builder) => {
+    builder.addCase(loginTC.fulfilled, (state, action) => {
+      state.isLoggedIn = action.payload.isLoggedIn
+    })
   }
 })
 
