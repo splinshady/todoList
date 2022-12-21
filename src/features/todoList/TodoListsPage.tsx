@@ -37,7 +37,7 @@ const TodoListsPage = () => {
     dispatch(createTodoListsTC(title))
   }, [dispatch])
   const changeListTitle = useCallback((todoListID: string, newTitle: string) => {
-    dispatch(changeTodoListsTitleTC(todoListID, newTitle))
+    dispatch(changeTodoListsTitleTC({todoListID, newTitle}))
   }, [dispatch])
   const changeFilter = useCallback((filter: TaskFilterType, todoListID: string) => {
     dispatch(changeListFilterAC({todoListID, filter}))
