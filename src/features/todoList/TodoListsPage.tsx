@@ -28,7 +28,7 @@ const TodoListsPage = () => {
   }, [])
 
   const addTask = useCallback((inputValue: string, todoListID: string) => {
-    dispatch(addTaskTC(todoListID, inputValue))
+    dispatch(addTaskTC({todoListID, inputValue}))
   }, [dispatch])
   const removeTodoList = useCallback((todoListID: string) => {
     dispatch(removeTodoListsTC(todoListID))

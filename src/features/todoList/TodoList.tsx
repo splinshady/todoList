@@ -28,11 +28,11 @@ const TodoList: React.FC<TodoListPropsType> = memo(({addTask, changeListTitle, t
 
     const dispatch = useDispatch()
 
-    const changeTaskStatus = (taskId: string, status: TaskStatuses, todoListID: string) => {
-        dispatch(updateTaskStatusTC(todoListID, status, taskId))
+    const changeTaskStatus = (taskID: string, status: TaskStatuses, todoListID: string) => {
+        dispatch(updateTaskStatusTC({todoListID, status, taskID}))
     }
-    const changeTaskTitle = (taskId: string, newTitle: string, todoListID: string) => {
-        dispatch(updateTaskTitleTC(todoListID, newTitle, taskId))
+    const changeTaskTitle = (taskID: string, title: string, todoListID: string) => {
+        dispatch(updateTaskTitleTC({todoListID, title, taskID}))
     }
     const removeTaskCallback = (taskId: string, todoListID: string) => {
         dispatch(removeTaskTC({taskId, todoListID}))

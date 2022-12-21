@@ -8,10 +8,10 @@ import {AxiosError} from "axios";
 
 export const loginTC = createAsyncThunk<{isLoggedIn: boolean}, LoginParamsType, {
   rejectValue: {errors: string[], fieldsErrors?: FieldsErrorsType[]}
-}>('auth/login', async (data, thunkAPI) => {
+}>('auth/login', async (param, thunkAPI) => {
   thunkAPI.dispatch(setAppStatus({status: 'loading'}))
   try {
-    const res = await authAPI.login(data)
+    const res = await authAPI.login(param)
     if (res.data.resultCode === 0) {
       return {isLoggedIn: true}
     } else {
@@ -28,7 +28,7 @@ export const loginTC = createAsyncThunk<{isLoggedIn: boolean}, LoginParamsType, 
   }
 })
 
-export const logoutTC = createAsyncThunk<{isLoggedIn: boolean}>('auth/logout', async (arg , thunkAPI) => {
+export const logoutTC = createAsyncThunk<{isLoggedIn: boolean}>('auth/logout', async (param , thunkAPI) => {
   thunkAPI.dispatch(setAppStatus({status: 'loading'}))
   try {
     const res = await authAPI.logout()
@@ -36,12 +36,12 @@ export const logoutTC = createAsyncThunk<{isLoggedIn: boolean}>('auth/logout', a
       return {isLoggedIn: false}
     } else {
       handleServerAppError(res.data, thunkAPI.dispatch)
-      return thunkAPI.rejectWithValue({errors: res.data.messages, fieldsErrors: res.data.fieldsErrors})
+      return thunkAPI.rejectWithValue(null)
     }
   } catch (e: any) {
     const error: AxiosError = e
     handleServerNetworkError(error, thunkAPI.dispatch)
-    return thunkAPI.rejectWithValue({errors: [error.message], fieldsErrors: undefined})
+    return thunkAPI.rejectWithValue(null)
 
   } finally {
     thunkAPI.dispatch(setAppStatus({status: 'succeeded'}))
