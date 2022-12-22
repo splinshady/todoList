@@ -7,6 +7,18 @@
     border-radius: 10px;
     background: linear-gradient(to bottom, rgba(136, 136, 136, 0.05), #d6e4f3);
     box-shadow: 15px 15px 20px rgba(0,0,0,0.1), -15px -15px 20px #fff;
+    position: relative;
+    overflow: hidden;
+    max-width: 400px;
+}
+
+.filter_container {
+    display: flex;
+    gap: 10px;
+}
+
+.scale {
+    transform: scale(0);
 }
 
 .task_list {
@@ -17,21 +29,4 @@
     gap: 10px;
 }
 
-.scale {
-    transform: scale(0);
-}
 
-.task_item {
-    display: flex;
-    justify-content: space-between;
-}
-
-.task_item_checked {
-    text-decoration: line-through;
-    color: hotpink;
-}
-
-.filter_container {
-    display: flex;
-    gap: 10px;
-}

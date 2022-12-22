@@ -79,7 +79,12 @@ const TodoListsPage = () => {
 
   return (
     <div className={style.todoLists_container}>
-      <AddItemForm addItem={addTodoList}/>
+      <div className={style.addItemForm_container}>
+        <div className={style.addItemForm}>
+          <h3>Add Todolist</h3>
+          <AddItemForm addItem={addTodoList}/>
+        </div>
+      </div>
       {todoListsForRender}
     </div>
   );

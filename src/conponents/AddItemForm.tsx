@@ -35,7 +35,7 @@ const AddItemForm: React.FC<AddItemFormPropsType> = memo((props) => {
         event.key === 'Enter' && addItem()
     }
 
-    const inputStyle = `${style.input_style} ${inputError ? style.input_error : ''}`
+    const inputStyle = `${style.input_style} ${inputError && style.input_error}`
 
     return (
         <div className={style.input_container}>

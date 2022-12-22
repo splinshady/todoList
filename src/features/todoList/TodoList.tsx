@@ -2,7 +2,7 @@ import React, {memo, useCallback, useEffect} from 'react';
 import Button from "../../conponents/Button";
 import style from "./TodoList.module.css";
 import AddItemForm from "../../conponents/AddItemForm";
-import {MutableSpan} from "../../conponents/MutableSpan";
+import {MutableSpan} from "../../conponents/MutableSpan/MutableSpan";
 import Task from "../task/Task";
 import {
     fetchTasksTC, removeTaskTC, updateTaskStatusTC, updateTaskTitleTC
@@ -57,7 +57,7 @@ const TodoList: React.FC<TodoListPropsType> = memo(({addTask, changeListTitle, t
             <h3>
                 <MutableSpan changeTitle={changeListTitleCallback} title={props.title}/>
             </h3>
-            <Button disabled={props.entityStatus === 'loading'} callback={() => props.removeTodoList(todoListID)} title={'delete todolist'}/>
+            <Button delete disabled={props.entityStatus === 'loading'} callback={() => props.removeTodoList(todoListID)} title={'x'}/>
             <AddItemForm addItem={addTaskCallback} disabled={props.entityStatus === 'loading'}/>
             <ul className={style.task_list}>
                 {props.tasks.map((item) => <Task key={item.id}

@@ -1,4 +1,5 @@
 import React, {ChangeEvent, memo, useState} from 'react';
+import style from './Mutablespan.module.css'
 
 type MutableSpanPropsType = {
     title: string,
@@ -22,7 +23,7 @@ export const MutableSpan: React.FC<MutableSpanPropsType> = memo((props) => {
     }
 
     return (editMode
-            ? <input type="text" value={title} onChange={onChangeTitleHandler} onBlur={deactivateEditMode} autoFocus/>
-            : <span onDoubleClick={activateEditMode}>{props.title}</span>
+            ? <input className={style.item} type="text" value={title} onChange={onChangeTitleHandler} onBlur={deactivateEditMode} autoFocus/>
+            : <span className={style.item} onDoubleClick={activateEditMode}>{props.title}</span>
     );
 })

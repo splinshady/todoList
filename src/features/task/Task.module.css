@@ -1,0 +1,21 @@
+
+
+.task_item {
+    display: flex;
+    position: relative;
+    background-color: #ffffff;
+    min-height: 30px;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.task_item_checked {
+    text-decoration: line-through;
+    color: hotpink;
+}
+
+.task_container {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+}
