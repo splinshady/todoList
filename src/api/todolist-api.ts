@@ -47,7 +47,7 @@ export const authAPI = {
     return axiosInstance.post<LoginParamsType, AxiosResponse<ResponseType<{ userId: number }>>>(`auth/login`, loginData)
   },
   me() {
-    return axiosInstance.get<ResponseType<{ userId: number, email: string, login: string }>>(`auth/me`)
+    return axiosInstance.get<MeResponseType<{ userId: number, email: string, login: string }>>(`auth/me`)
 
   },
   logout() {
@@ -119,4 +119,11 @@ export type ResponseGetTaskType = {
   error: string
   items: TaskType[]
   totalCount: number
+}
+
+export type MeResponseType<T = {}> = {
+  resultCode: number
+  messages: Array<string>
+  fieldsErrors: Array<FieldsErrorsType>
+  data: T
 }

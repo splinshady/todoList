@@ -9,8 +9,8 @@ import {
   createTodoListsTC, fetchTodoListsTC,
   removeTodoListsTC, TaskFilterType,
   TodolistDomainType
-} from "../../reducers/todoLists-reducer";
-import {addTaskTC} from "../../reducers/tasks-reducer";
+} from "./todoLists-reducer";
+import {addTaskTC} from "../task/tasks-reducer";
 import {TaskStatuses} from "../../api/todolist-api";
 import TodoList from "./TodoList";
 import {TasksType} from "../../app/App";

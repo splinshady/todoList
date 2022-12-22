@@ -1,8 +1,8 @@
 import { Dispatch } from 'redux'
-import {ResponseType} from '../api/todolist-api'
-import {setAppError, setAppStatus} from '../reducers/app-reducer'
+import {MeResponseType, ResponseType} from '../api/todolist-api'
+import {setAppError, setAppStatus} from '../app/app-reducer'
 
-export const handleServerAppError = <T>(data: ResponseType<T>, dispatch: Dispatch) => {
+export const handleServerAppError = <T>(data: ResponseType<T> | MeResponseType<T>, dispatch: Dispatch) => {
     if( data.resultCode === 1) {
         data.messages[0]
             ? dispatch(setAppError({error: data.messages[0]}))

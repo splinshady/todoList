@@ -6,11 +6,11 @@ import {MutableSpan} from "../../conponents/MutableSpan";
 import Task from "../task/Task";
 import {
     fetchTasksTC, removeTaskTC, updateTaskStatusTC, updateTaskTitleTC
-} from "../../reducers/tasks-reducer";
-import {TaskFilterType} from "../../reducers/todoLists-reducer";
+} from "../task/tasks-reducer";
+import {TaskFilterType} from "./todoLists-reducer";
 import {TaskStatuses, TaskType} from "../../api/todolist-api";
 import {useDispatch} from "react-redux";
-import {RequestStatusType} from "../../reducers/app-reducer";
+import {RequestStatusType} from "../../app/app-reducer";
 
 type TodoListPropsType = {
     title: string,
