@@ -1,0 +1,13 @@
+.form {
+    display: flex;
+    flex-flow: column nowrap;
+    width: 300px;
+}
+
+.form_item p {
+    background-color: white;
+    position: absolute;
+    bottom: -9px;
+    padding-left: 2px;
+    padding-right: 2px;
+}

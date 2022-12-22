@@ -70,8 +70,8 @@ export type TodolistType = {
 }
 
 export type FieldsErrorsType ={
-  errors: string,
-  fieldsErrors: string
+  error: string,
+  field: string
 }
 
 export type ResponseType<T = {}> = {

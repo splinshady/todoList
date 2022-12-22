@@ -14,7 +14,6 @@ export const initializeAppTC = createAsyncThunk('app/initializeApp', async (para
       dispatch(setIsLoggedInAC({isLoggedIn: true}))
       return {isInitialized: true, loginName: res.data.data.login}
     } else {
-      //handleServerAppError<{ userId: number, email: string, login: string }>(res.data, dispatch);
       return {isInitialized: true}
     }
   } catch (error) {
