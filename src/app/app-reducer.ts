@@ -11,12 +11,11 @@ export const initializeAppTC = createAsyncThunk('app/initializeApp', async (para
   try {
     const res = await authAPI.me()
     if (res.data.resultCode === 0) {
-      console.log()
       dispatch(setIsLoggedInAC({isLoggedIn: true}))
       return {isInitialized: true, loginName: res.data.data.login}
     } else {
-      handleServerAppError<{ userId: number, email: string, login: string }>(res.data, dispatch);
-      return rejectWithValue(null)
+      //handleServerAppError<{ userId: number, email: string, login: string }>(res.data, dispatch);
+      return {isInitialized: true}
     }
   } catch (error) {
     handleServerNetworkError(error as AxiosError, dispatch)
@@ -45,7 +44,7 @@ export const slice = createSlice({
   extraReducers: builder => {
     builder.addCase(initializeAppTC.fulfilled, (state, action) => {
       state.isInitialized = action.payload.isInitialized
-      state.loginName = action.payload.loginName
+      state.loginName = action.payload.loginName ?  action.payload.loginName : ''
     })
   }
 })
