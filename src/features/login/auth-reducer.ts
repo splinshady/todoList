@@ -18,8 +18,8 @@ export const loginTC = createAsyncThunk<{isLoggedIn: boolean}, LoginParamsType, 
       handleServerAppError<{ userId: number }>(res.data, thunkAPI.dispatch);
       return thunkAPI.rejectWithValue({errors: res.data.messages, fieldsErrors: res.data.fieldsErrors})
     }
-  } catch (e: any) {
-    const error: AxiosError = e
+  } catch (e) {
+    const error = e as AxiosError
     handleServerNetworkError(error, thunkAPI.dispatch)
     return thunkAPI.rejectWithValue({errors: [error.message], fieldsErrors: undefined})
 
@@ -38,8 +38,8 @@ export const logoutTC = createAsyncThunk<{isLoggedIn: boolean}>('auth/logout', a
       handleServerAppError(res.data, thunkAPI.dispatch)
       return thunkAPI.rejectWithValue(null)
     }
-  } catch (e: any) {
-    const error: AxiosError = e
+  } catch (e) {
+    const error = e as AxiosError
     handleServerNetworkError(error, thunkAPI.dispatch)
     return thunkAPI.rejectWithValue(null)
 

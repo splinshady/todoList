@@ -2,6 +2,7 @@ import {authAPI} from "../api/todolist-api";
 import {setIsLoggedInAC} from "../features/login/auth-reducer";
 import {handleServerAppError, handleServerNetworkError} from "../utils/error-utils";
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {AxiosError} from "axios";
 
 // thunks
 
@@ -17,8 +18,8 @@ export const initializeAppTC = createAsyncThunk('app/initializeApp', async (para
       handleServerAppError<{ userId: number, email: string, login: string }>(res.data, dispatch);
       return rejectWithValue(null)
     }
-  } catch (error: any) {
-    handleServerNetworkError(error, dispatch)
+  } catch (error) {
+    handleServerNetworkError(error as AxiosError, dispatch)
     return rejectWithValue(null)
   } finally {
     dispatch(setAppStatus({status: 'succeeded'}))
