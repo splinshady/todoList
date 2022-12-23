@@ -12,7 +12,7 @@
 .button_delete {
     list-style: none;
     border: 0;
-    background-color: #f67689;
+    background-color: transparent;
     width: 40px;
     height: 40px;
     padding: 10px 10px 0px 0px;
@@ -20,7 +20,7 @@
     border-radius: 50%;
     top: -15px;
     right: -15px;
-    color: white;
+    color: #757575;
     cursor: pointer;
     transition: 0.5s;
 }
@@ -29,7 +29,12 @@
     background-color: rgba(210, 82, 82, 0.98);
     width: 45px;
     height: 45px;
+color: white;
+}
 
+
+.task_fulfilled:hover {
+    background-color: rgba(56, 105, 45, 0.66);
 }
 
 .button:hover {
@@ -70,4 +75,5 @@
 .button_disabled:hover::after {
     opacity: 0;
 }
+
 

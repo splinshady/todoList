@@ -37,8 +37,7 @@ const Task: React.FC<TaskPropsType> = memo((props) => {
       <div className={style.task_container}>
         <MutableSpan changeTitle={changeTaskTitle} title={props.task.title}/>
       </div>
-
-      <Button delete disabled={entityStatus === 'loading'} callback={removeTaskCallback} title={'x'}/>
+      <Button taskStatus={props.task.status} delete disabled={entityStatus === 'loading'} callback={removeTaskCallback} title={'x'}/>
     </li>
   )
 });

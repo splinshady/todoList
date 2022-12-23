@@ -3,15 +3,20 @@
 .task_item {
     display: flex;
     position: relative;
-    background-color: #ffffff;
+    background-color: transparent;
     min-height: 30px;
     border-radius: 5px;
     overflow: hidden;
+    padding-right: 20px;
+    box-shadow: inset 5px 5px 5px rgba(0,0,0,0.05),
+    inset 15px 15px 15px rgba(0,0,0,0.05),
+    inset 5px 5px 5px rgba(0,0,0,0.05),
+    inset -5px -5px 5px rgba(0,0,0,0.05);
+    transition: 0.2s;
 }
 
 .task_item_checked {
-    text-decoration: line-through;
-    color: hotpink;
+    background-color: rgba(70, 255, 0, 0.16);
 }
 
 .task_container {
