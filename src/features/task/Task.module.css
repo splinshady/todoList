@@ -3,15 +3,15 @@
 .task_item {
     display: flex;
     position: relative;
-    background-color: transparent;
+    background-color: white;
     min-height: 30px;
     border-radius: 5px;
     overflow: hidden;
     padding-right: 20px;
-    box-shadow: inset 5px 5px 5px rgba(0,0,0,0.05),
+    box-shadow: inset 3px 3px 3px rgba(0,0,0,0.05),
     inset 15px 15px 15px rgba(0,0,0,0.05),
-    inset 5px 5px 5px rgba(0,0,0,0.05),
-    inset -5px -5px 5px rgba(0,0,0,0.05);
+    inset 3px 3px 3px rgba(0,0,0,0.05),
+    inset -3px -3px 3px rgba(0,0,0,0.05);
     transition: 0.2s;
 }
 
@@ -22,5 +22,6 @@
 .task_container {
     display: flex;
     align-items: center;
+    width: 100%;
     padding: 5px;
 }

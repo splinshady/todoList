@@ -4,6 +4,8 @@
     gap: 30px;
     padding: 30px;
     justify-content: flex-start;
+    width: 100vw;
+    box-sizing: border-box;
 }
 
 .addItemForm_container {
@@ -13,7 +15,7 @@
 .addItemForm {
     background: linear-gradient(to bottom, rgba(136, 136, 136, 0.05), #d6e4f3);
     box-shadow: 15px 15px 20px rgba(0,0,0,0.1), -15px -15px 20px #fff;
-    max-width: 500px;
+    max-width: 300px;
     padding: 20px;
     border-radius: 10px;
 }

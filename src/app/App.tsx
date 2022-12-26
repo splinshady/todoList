@@ -40,13 +40,13 @@ function App() {
           <CircularProgress/>
         </div>
         : <div className="App">
+          {requestStatus === 'loading' && <div className={'linear_progress'}><LinearProgress color="info"/></div>}
           <CustomizedSnackbars/>
           <AppBar position="static">
             <Toolbar className={'header_container'}>
               {isLoggedIn && <span>{loginName}</span>}
               {isLoggedIn && <Button color="inherit" onClick={logoutHandler}>Log out</Button>}
             </Toolbar>
-            {requestStatus === 'loading' && <LinearProgress color="info"/>}
           </AppBar>
           <Routes>
             <Route path='/' element={<TodoListsPage/>}/>

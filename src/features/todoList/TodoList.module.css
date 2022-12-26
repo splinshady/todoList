@@ -9,7 +9,8 @@
     box-shadow: 15px 15px 20px rgba(0,0,0,0.1), -15px -15px 20px #fff;
     position: relative;
     overflow: hidden;
-    max-width: 400px;
+    width: 300px;
+    box-sizing: border-box;
 }
 
 .filter_container {
